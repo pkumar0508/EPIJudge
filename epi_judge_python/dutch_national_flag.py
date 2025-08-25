@@ -8,9 +8,33 @@ from test_framework.test_utils import enable_executor_hook
 RED, WHITE, BLUE = range(3)
 
 
+def swap(A: List[int], i: int, j: int):
+    if i != j:
+        A[i], A[j] = A[j], A[i]
+
+
 def dutch_flag_partition(pivot_index: int, A: List[int]) -> None:
-    # TODO - you fill in here.
-    return
+    lower = 0
+    higher = len(A)
+    undiscovered = len(A)
+    value = A[pivot_index]
+
+    while undiscovered:
+        current = higher - undiscovered
+        # assert(all([
+        #     all(x < value for x in A[:lower]),
+        #     all(x == value for x in A[lower:current]),
+        #     len(A[current:higher]) == undiscovered,
+        #     all(x > value for x in A[higher:]),
+        # ]))
+        undiscovered -= 1
+
+        if A[current] < value:
+            swap(A, current, lower)
+            lower += 1
+        elif value < A[current]:
+            higher -= 1
+            swap(A, current, higher)
 
 
 @enable_executor_hook
